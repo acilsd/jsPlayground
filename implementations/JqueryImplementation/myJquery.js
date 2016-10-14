@@ -108,7 +108,6 @@
   /*****/
   //html manipulations
   /*****/
-  // NOTE: holy shit
   $.extend($.prototype, {
     html: function(newHtml) {
       if (arguments.length) {
@@ -174,20 +173,48 @@
     children: traverser(function() {
       return this.children;
     }),
-    attr: function() {
-
+    attr: function(attr,value) {
+      if (arguments.length > 1) {
+        return $.each(this, function(i, el) {
+          el.setAttribute(attr, value);
+        });
+      } else {
+        return this[0] && this[0].getAttribute(attr);
+      }
     },
-    css: function() {
-
+    css: function(css, value) {
+      if (arguments.length > 1) {
+        return $.each(this, function(i, el) {
+          el.style[css] = value;
+        });
+      } else {
+        return this[0] &&
+          document.defaultView.getComputedStyle(this[0])
+          .getPropertyValue(css);
+      }
     },
     width: function() {
-
+      var clientWidth = this[0].clientWidth;
+      var leftPad = this.css("padding-left");
+      var rightPad = this.css("padding-right");
+      return clientWidth - parseInt(leftPad) - parseInt(rightPad);
     },
     offset: function() {
-
+      var offset = this[0].getBoundingClientRect();
+      return {
+        top: offset.top + window.pageYOffset,
+        left: offset.left + window.pageXOffset
+      };
+    },
+    show: function() {
+      this.css('display', 'none');
     },
     hide: function() {
-
+      this.css('display', '');
     },
+    /*****/
+    //html manipulations
+    /*****/
+    // NOTE: holy shit
   });
 });
