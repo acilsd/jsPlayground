@@ -216,5 +216,18 @@
     //html manipulations
     /*****/
     // NOTE: holy shit
+    bind: function(evt, handler) {
+      return $.each(this, function(i, el) {
+        el.addEventListener(evt, handler, false);
+      });
+    },
+    unbind: function(evt, handler) {
+      return $.each(this, function(i, el) {
+        el.removeEventListener(evt, handler, false);
+      });
+    },
+    has: function() {
+      
+    }
   });
 });
