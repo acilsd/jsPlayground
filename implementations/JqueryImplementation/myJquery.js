@@ -139,7 +139,17 @@
       return $(elements);
     },
     next: function() {
-
+      var elements = [];
+      $.each(this, function(i, el) {
+        var current = el.nextSibling;
+        while (current && current.nodeType !== 1) {
+          current = current.nextSibling;
+        }
+        if (current) {
+          elements.push(current);
+        }
+      });
+      return $(elements);
     },
     prev: function() {
 
