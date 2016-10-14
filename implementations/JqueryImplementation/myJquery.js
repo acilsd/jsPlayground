@@ -152,7 +152,17 @@
       return $(elements);
     },
     prev: function() {
-
+      var elements = [];
+      $.each(this, function(i, el) {
+        var current = el.previousSibling;
+        while (current && current.nodeType !== 1) {
+          current = current.previousSibling;
+        }
+        if (current) {
+          elements.push(current);
+        }
+      });
+      return $(elements);
     },
     parent: function() {
 
