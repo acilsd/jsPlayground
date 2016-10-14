@@ -1,5 +1,4 @@
 (function() {
-
   var $ = function(selector) {
     if( !(this instanceof $) ) {
       return new $(selector);
@@ -10,7 +9,6 @@
     } else {
       elements = selector;
     }
-
     for (var i = 0; i < elements.length; i++) {
       this[i] = elements[i];
     }
@@ -25,7 +23,6 @@
     }
     return target;
   };
-
   //static methods
   //check if something looks like array (like collections or whatev)
   var isArrayLike = function(obj) {
@@ -48,6 +45,22 @@
       }
     });
     return txt;
+  };
+
+  var traverser = function(cb) {
+    return function() {
+      var elements = [];
+      var args = arguments;
+      $.each(this, function(i, el) {
+        var ret = cb.apply(el, args);
+        if (ret && isArrayLike(ret)) {
+          [].push.apply(elements, ret);
+        } else if (ret) {
+          elements.push(ret);
+        }
+      });
+      return $(elements);
+    };
   };
 
   $.extend($, {
@@ -91,12 +104,11 @@
         return fn.apply(context, arguments);
       };
     }
-    // NOTE: holy shit
-    //DOM methods
   });
   /*****/
   //html manipulations
   /*****/
+  // NOTE: holy shit
   $.extend($.prototype, {
     html: function(newHtml) {
       if (arguments.length) {
@@ -138,38 +150,30 @@
       });
       return $(elements);
     },
-    next: function() {
-      var elements = [];
-      $.each(this, function(i, el) {
-        var current = el.nextSibling;
-        while (current && current.nodeType !== 1) {
-          current = current.nextSibling;
-        }
-        if (current) {
-          elements.push(current);
-        }
-      });
-      return $(elements);
-    },
-    prev: function() {
-      var elements = [];
-      $.each(this, function(i, el) {
-        var current = el.previousSibling;
-        while (current && current.nodeType !== 1) {
-          current = current.previousSibling;
-        }
-        if (current) {
-          elements.push(current);
-        }
-      });
-      return $(elements);
-    },
-    parent: function() {
-
-    },
-    children: function() {
-
-    },
+    next: traverser(function() {
+      var current = this.nextSibling;
+      while (current && current.nodeType !== 1) {
+        current = current.nextSibling;
+      }
+      if (current) {
+        return current;
+      }
+    }),
+    prev: traverser(function() {
+      var current = this.previousSibling;
+      while (current && current.nodeType !== 1) {
+        current = current.previousSibling;
+      }
+      if (current) {
+        return current;
+      }
+    }),
+    parent: traverser(function() {
+      return this.parentNode;
+    }),
+    children: traverser(function() {
+      return this.children;
+    }),
     attr: function() {
 
     },
