@@ -207,10 +207,10 @@
       };
     },
     show: function() {
-      this.css('display', 'none');
+      this.css('display', '');
     },
     hide: function() {
-      this.css('display', '');
+      this.css('display', 'none');
     },
     /*****/
     //html manipulations
@@ -225,9 +225,8 @@
       return $.each(this, function(i, el) {
         el.removeEventListener(evt, handler, false);
       });
-    },
-    has: function() {
-      
     }
   });
-});
+  $.fn = $.prototype;
+  window.$ = $;
+})();
