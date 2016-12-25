@@ -14,19 +14,22 @@ const ourArr = [1, 2, 3, 4, 5, 6, 7, 8];
 
 console.log(composer(ourArr, (x, y) => x * y, 1));
 
+// NOTE: compose data (like the length of the videos)
+//div data-time='5:35'
 
-// NOTE: not a reduce im just too lazy to make a new file
+const nodeList = Array.from(document.quesySelectorAll('something that we need'));
 
-const nummer = (val) => () => val;
+const seconds = nodeList
+  .map(node => node.dataset.time) //all time nodes
+  .map(timeCode => { //converting
+    const [mins, secs] = timeCode.split(':').map(parseFloat);
+    return (mins * 60) + secs;
+  })
+  .reduce((total, vidSeconds) => total + vidSeconds);
 
-const adder = (val1, val2) => {
-  return val1 + val2;
-};
+let secondsLeft = seconds;
+const hours = Math.floor(secondsLeft / 3600);
+secondsLeft = secondsLeft % 3600;
 
-const fnAdder = (fn, fn1) => {
-  return adder(fn(), fn1());
-};
-
-
-
-console.log(fnAdder(nummer(2), nummer(2)));
+const mins = Math.floor(secondsLeft / 60);
+secondsLeft = secondsLeft % 60;
