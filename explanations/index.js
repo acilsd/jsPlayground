@@ -1,4 +1,5 @@
-//1//
+'use strict';
+
 
 // Dynamic: compilaction and execution happen together
 // Weaky typed: type associated with value, not variable (var a = 1, 'one' etc)
