@@ -1,9 +1,8 @@
 // var MyClass = function() {
-//   //закрытый метод
 //   var privateMethod = function() {
 //     console.log('private!');
 //   };
-//   //публичный
+
 //   this.publicMethod = function() {
 //     console.log('public!');
 //     privateMethod();
@@ -14,12 +13,12 @@
 //obj.privateMethod(); //error
 //obj['privateMethod']; //norm
 
-/*НАСЛЕДОВАНИЕ*/
+
 function Human(name) {
   this.name = name;
   this.talk = function() {
     console.log('Hello, my name is ' + this.name);
-  }
+  };
 }
 function Student(name) {
   this.name = name;
