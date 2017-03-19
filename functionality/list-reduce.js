@@ -33,3 +33,15 @@ secondsLeft = secondsLeft % 3600;
 
 const mins = Math.floor(secondsLeft / 60);
 secondsLeft = secondsLeft % 60;
+
+const orders = [
+  { amount: 250 },
+  { amount: 500 },
+  { amount: 700 },
+  { amount: 900 },
+  { amount: 1000 },
+]
+
+const total = orders.reduce( (sum, order) => (sum + order.amount), 0);
+
+console.log(total);

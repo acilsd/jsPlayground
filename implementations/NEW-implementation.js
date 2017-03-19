@@ -8,13 +8,14 @@ Person.prototype.speak = function() {
 };
 
 
-NEW = function(constructor, args) {
+NEW = function(constructor) {
   //create new obj
   var obj = {};
   //set proto to constr' prototype
   obj.__proto__ = constructor.prototype;
   //invoke constructor with new obj as context
-  var returnValue = constructor.apply(obj, args);
+  var args = Array.prototype.slice.apply(arguments);
+  constructor.apply(obj, args.slice(1));
 
   return obj;
 }
